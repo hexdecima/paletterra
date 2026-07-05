@@ -1,0 +1,10 @@
+Items: {
+	GrandPalette: {
+		DisplayName: Grand Palette
+		Tooltip:
+			'''
+			Allows masterful control over painting!
+			Right-click to configure
+			'''
+	}
+}
