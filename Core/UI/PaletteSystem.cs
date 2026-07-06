@@ -123,6 +123,7 @@ namespace Paletterra.Core.UI {
     /// Tracks the time (in ticks) between the palette's usages.
     /// </summary>
     public int itemDelay = 0;
+    public bool isHoldingPalette = false;
 
     /// <summary>
     /// Hides the UI if visible, or shows it if not.
@@ -198,6 +199,13 @@ namespace Paletterra.Core.UI {
       if (this.itemDelay > 0) {
         this.itemDelay--;
       }
+
+      if (!this.isHoldingPalette) {
+        if (this.menu != null && this.menu.isEnabled) {
+          this.ToggleMenu();
+        }
+      }
+      this.isHoldingPalette = false;
     }
 
     #region Hooks

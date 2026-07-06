@@ -43,13 +43,18 @@ namespace Paletterra.Content.Items
       this.Apply(player);
       return base.UseItem(player);
     }
+    public override void HoldItem(Player player)
+    {
+      PaletteSystem sys = ModContent.GetInstance<PaletteSystem>();
+      sys.isHoldingPalette = true;
+    }
     #endregion
 
     /// <summary>
     /// Applies the selected tool to the tile currently being hovered.
     /// </summary>
     protected void Apply(Player player) {
-        PaletteSystem sys = ModContent.GetInstance<PaletteSystem>();
+      PaletteSystem sys = ModContent.GetInstance<PaletteSystem>();
         if (sys.itemDelay > 0) return;
 
         Point mousePos = Main.MouseWorld.ToTileCoordinates();
