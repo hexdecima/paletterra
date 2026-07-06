@@ -32,7 +32,7 @@ namespace Paletterra.Core.UI {
     /// Colour tint for this button's frame.
     public Color color = ImageButton.FrameColor;
     /// Inner padding.
-    public Directions padding = Directions.Default;
+    public Directions padding = new Directions(6, 6, 6, 6);
     /// <summary>
     /// Per-instance logic to run before each draw call.
     /// </summary>
@@ -58,10 +58,10 @@ namespace Paletterra.Core.UI {
           (int)dims.Width,
           (int)dims.Height);
       Rectangle imgRect = new Rectangle(
-          (int)(pos.X + this.padding.L),
-          (int)pos.Y + (int)this.padding.T,
-          (int)dims.Width - (int)this.padding.X,
-          (int)dims.Height - (int)this.padding.Y
+          (int)(pos.X + this.padding.L.Scaled),
+          (int)pos.Y + (int)this.padding.T.Scaled,
+          (int)dims.Width - (int)this.padding.X.Scaled,
+          (int)dims.Height - (int)this.padding.Y.Scaled
           );
 
       if (IsMouseHovering && this.tooltip != null) {

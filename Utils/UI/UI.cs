@@ -53,34 +53,47 @@ namespace Paletterra.Utils.UI {
   /// A more friend-shaped `Vector4`.
   /// </summary>
   public class Directions {
-    public float top;
-    public float right;
-    public float bottom;
-    public float left;
-    public float T { get => top; }
-    public float R { get => right; }
-    public float B { get => bottom; }
-    public float L { get => left; }
-    public float X { get => left + right; }
-    public float Y { get => top + bottom; }
+    public Scaling top;
+    public Scaling right;
+    public Scaling bottom;
+    public Scaling left;
+    public Scaling T { get => top; }
+    public Scaling R { get => right; }
+    public Scaling B { get => bottom; }
+    public Scaling L { get => left; }
+    public Scaling X { get => left + right; }
+    public Scaling Y { get => top + bottom; }
 
     public static Directions Zero() {
       return new Directions(0, 0, 0, 0);
     }
-    public static Directions Default => new Directions(6, 6, 6, 6);
 
     public Directions(float top, float right, float bottom, float left) {
+      this.top = new Scaling(top);
+      this.right = new Scaling (right);
+      this.bottom = new Scaling(bottom);
+      this.left = new Scaling(left);
+    }
+    public Directions(Scaling top, Scaling right, Scaling bottom, Scaling left) {
       this.top = top;
       this.right = right;
       this.bottom = bottom;
       this.left = left;
     }
-    
     public void SetEach(float n) {
-      this.top = n;
-      this.right = n;
-      this.bottom = n;
-      this.left = n;
+      this.top = new Scaling(n);
+      this.right = new Scaling(n);
+      this.bottom = new Scaling(n);
+      this.left = new Scaling(n);
+    }
+
+    public static Directions operator +(Directions lhs, Directions rhs) {
+      return new Directions(
+          lhs.top + rhs.top,
+          lhs.right + rhs.right,
+          lhs.bottom + rhs.bottom,
+          lhs.left + rhs.left
+        );
     }
   }
 }
