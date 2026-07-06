@@ -70,7 +70,7 @@ namespace Paletterra.Core.UI {
       bool enoughActive = false;
 
       foreach (short id in allPaintIDs) {
-        int count = p.CountItem((int)id);
+        int count = p.CountItem((int)id, 10000);
         if (count > 0) {
           items.Add(new PaintEntry(id, count));
           if (this.active != null && this.active == id) enoughActive = true;

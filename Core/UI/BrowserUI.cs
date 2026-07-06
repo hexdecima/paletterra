@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Paletterra.Utils.UI;
+using Terraria.GameContent.UI.Elements;
 
 namespace Paletterra.Core.UI {
   /// <summary>
@@ -56,10 +57,17 @@ namespace Paletterra.Core.UI {
 
       for (int i = 0; i < this.entries.Length; i++) {
         PaintEntry entry = this.entries[i];
-        // TODO: We're ignoring the stack count here. Don't.
         Texture2D text = (Texture2D)ModContent.Request<Texture2D>(
             $"Terraria/Images/Item_{entry.id}");
         ImageButton btn = new ImageButton(text);
+        btn.padding = new Directions(4, 6, 6, 2);
+
+        float fontScale = entry.stack <= 9999 ? .8f : .7f;
+        string countText = entry.stack <= 9999 ? $"{entry.stack}" : "9999+";
+        UIText count = new UIText(countText, fontScale);
+        count.HAlign = .95f;
+        count.VAlign = 1;
+        btn.Append(count);
 
         Item item = new Item();
         item.SetDefaults(entry.id);
