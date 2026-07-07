@@ -73,7 +73,7 @@ namespace Paletterra.Core.UI {
     #region Hooks
     public override void OnActivate()
     {
-      Vector2 cursorPos = new Vector2(Main.mouseX, Main.mouseY) / Main.UIScale;
+      Vector2 cursorPos = Main.MouseScreen / Main.UIScale;
       this.Center(cursorPos);
 
       this.layout = Layout.Initial;

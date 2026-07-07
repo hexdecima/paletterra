@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.ID;
@@ -80,6 +81,16 @@ namespace Paletterra.Core.UI {
       this.entries = items;
       if (!enoughActive) this.active = null;
     }
+
+    /// <summary>
+    /// Returns the current active paint item's texture, if any.
+    /// </summary>
+    public Texture2D? AsTexture() {
+      if (this.active == null) return null;
+
+      return 
+        (Texture2D)ModContent.Request<Texture2D>($"Terraria/Images/Item_{this.active}");
+    }
   }
 
   [Autoload(Side = ModSide.Client)]
@@ -94,13 +105,11 @@ namespace Paletterra.Core.UI {
     /// A browser and picker for all paints in the player's inventory.
     /// </summary>
     private PaletteElement<BrowserUI>? browser;
+    private PaletteElement<OverlayUI>? overlay;
     private GameTime? lastUpdated;
     private bool isBrowserVisible = false;
     /// <summary>
     /// Tracks paint items in the player's inventory.
-    ///
-    /// Used to manage paint usage when using brushes and
-    /// to populate the Browser.
     /// </summary>
     public PaintTracker? paintTracker = new PaintTracker();
 
@@ -194,17 +203,27 @@ namespace Paletterra.Core.UI {
         Main.instance.LoadItem(id);
       }
     }
-    // Probably overkill at this point but oh well.
+
     private void Tick() {
       if (this.itemDelay > 0) {
         this.itemDelay--;
       }
 
-      if (!this.isHoldingPalette) {
+      this.UpdatePaletteHold();
+    }
+    private void UpdatePaletteHold() {
+      if (this.isHoldingPalette) {
+        if (this.paintTracker?.active == null) return;
+        if (this.overlay != null && !this.overlay.isEnabled)
+          this.overlay.Enable();
+      } else {
         if (this.menu != null && this.menu.isEnabled) {
           this.ToggleMenu();
+          if (this.overlay != null && this.overlay.isEnabled)
+            this.overlay.Disable();
         }
       }
+
       this.isHoldingPalette = false;
     }
 
@@ -214,6 +233,7 @@ namespace Paletterra.Core.UI {
       this.paintTracker = new PaintTracker();
       this.menu = new PaletteElement<MenuUI>();
       this.browser = new PaletteElement<BrowserUI>();
+      this.overlay= new PaletteElement<OverlayUI>();
       this.itemDelay = 0;
       this.PreloadTextures();
     }
@@ -222,12 +242,14 @@ namespace Paletterra.Core.UI {
       this.paintTracker = null;
       this.menu = null;
       this.browser = null;
+      this.overlay = null;
     }
     public override void UpdateUI(GameTime gameTime)
     {
       this.lastUpdated = gameTime;
       this.menu?.iface.Update(gameTime);
       this.browser?.iface.Update(gameTime);
+      this.overlay?.iface.Update(gameTime);
       this.Tick();
     }
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -243,6 +265,9 @@ namespace Paletterra.Core.UI {
                   }
                   if (this.browser != null && this.browser.isEnabled) {
                     this.browser.iface.Draw(Main.spriteBatch, this.lastUpdated);
+                  }
+                  if (this.overlay != null && this.isHoldingPalette) {
+                    this.overlay.iface.Draw(Main.spriteBatch, this.lastUpdated);
                   }
                 }
 

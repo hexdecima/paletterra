@@ -60,7 +60,7 @@ namespace Paletterra.Core.UI {
         Texture2D text = (Texture2D)ModContent.Request<Texture2D>(
             $"Terraria/Images/Item_{entry.id}");
         ImageButton btn = new ImageButton(text);
-        btn.padding = new Directions(4, 6, 6, 2);
+        btn.padding = new Directions(2, 6, 6, 2);
 
         float fontScale = entry.stack <= 9999 ? .8f : .7f;
         string countText = entry.stack <= 9999 ? $"{entry.stack}" : "9999+";
