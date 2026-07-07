@@ -29,7 +29,18 @@ namespace Paletterra.Content.Items
       Item.useAnimation = 15;
       Item.useTime = 15;
       Item.autoReuse = true;
-      Item.useStyle = ItemUseStyleID.HiddenAnimation;
+      Item.useStyle = ItemUseStyleID.RaiseLamp;
+    }
+    public override void AddRecipes()
+    {
+      this.CreateRecipe()
+        .AddIngredient(ItemID.Paintbrush)
+        .AddIngredient(ItemID.PaintRoller)
+        .AddIngredient(ItemID.PaintScraper)
+        .AddIngredient(ItemID.RichMahogany, 16)
+        .AddIngredient(ItemID.Bone, 6)
+        .AddTile(TileID.TinkerersWorkbench)
+        .Register();
     }
     public override bool AltFunctionUse(Player player) => true;
     public override bool? UseItem(Player player)

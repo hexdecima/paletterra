@@ -1,9 +1,10 @@
 Items: {
 	GrandPalette: {
-		DisplayName: Grand Palette
+		DisplayName: Mahogany Palette
 		Tooltip:
 			'''
-			Allows masterful control over painting!
+			Used as a brush, roller or scraper
+			Can also apply coatings
 			Right-click to configure
 			'''
 	}
