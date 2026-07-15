@@ -84,7 +84,6 @@ namespace Paletterra.Content.Items
           short? paintId = sys.paintTracker?.active;
           if (paintId == null) return;
 
-          // Illuminant and Echo coatings are applied very differently from the rest.
           Coat? coat = null;
           if (paintId == ItemID.GlowPaint) coat = Coat.Illuminant;
           else if (paintId == ItemID.EchoCoating) coat = Coat.Echo;
@@ -107,8 +106,11 @@ namespace Paletterra.Content.Items
           t.IsWallInvisible = false;
         }
     }
-    // Almost all paints just require setting the paint byte of the tile
-    // to its respective one.
+    /// <summary>
+    /// Applies paint to a tile or wall.
+    ///
+    /// Returns whether or not it was successfully applied.
+    /// </summary>
     private bool HandlePaint(Tile t, short paintId, Tool tool) {
       byte? paint = Paints.MapItemToPaint(paintId);
       if (paint == null) return false;
@@ -123,8 +125,11 @@ namespace Paletterra.Content.Items
       }
       return true;
     }
-    // The two exceptions work by changing specific properties of the tile,
-    // as a tile can both have a paint colour AND be invisible.
+    /// <summary>
+    /// Applies a coat to a tile or wall.
+    ///
+    /// Returns whether or not it was successfully applied.
+    /// </summary>
     private bool HandleCoat(Tile t, Coat paint, Tool tool) {
       if (tool == Tool.Brush) {
         switch (paint) {

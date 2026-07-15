@@ -5,13 +5,22 @@ using Paletterra.Utils.UI;
 
 namespace Paletterra.Core.UI {
   class MenuUI: UIState {
-    // The gap between the middle button and the ones to the sides, in pixels.
+    /// <summary>
+    /// The gap (in pixels) between the center button and those surrounding it.
+    /// </summary>
     internal static readonly Scaling GAP = new Scaling(8);
-    // The size of each button in the UI.
+    /// <summary>
+    /// The size (in pixels) of each button in this UI.
+    /// </summary>
     internal static readonly Scaling SIZE = new Scaling(30);
 
-    // A 3x3 grid of buttons to render.
+    /// <summary>
+    /// Which button layout to render, if any.
+    /// </summary>
     public Layout? layout;
+    /// <summary>
+    /// Point on screen to place this menu at.
+    /// </summary>
     public Vector2 pos;
 
     /// <summary>
@@ -29,20 +38,25 @@ namespace Paletterra.Core.UI {
       this.layout = lout;
       this.ResetGrid();
     }
+    /// <summary>
+    /// Clears all children and appends the current layout.
+    /// </summary>
     public void ResetGrid() {
       this.RemoveAllChildren();
       this.PlaceGrid();
     }
-    /// Returns a height and width for the UI.
+    /// <summary>
+    /// Returns the total sizes (in pixels) this UI takes.
+    /// </summary>
     public Vector2 CalculateUISize() {
       int n = (int)((MenuUI.SIZE.Scaled * 3)
         + (MenuUI.GAP.Scaled * 2));
 
       return new Vector2(n, n);
     }
-    /// Calculates the dimensions for this UI and applies it.
-    ///
-    /// Should be called after updating the center point.
+    /// <summary>
+    /// Updates this element's sizes and positioning.
+    /// </summary>
     private void UpdateDimensions() {
       Vector2 size = this.CalculateUISize();
       this.Width.Set(size.X, 0);
@@ -51,7 +65,11 @@ namespace Paletterra.Core.UI {
       this.Left.Set(pos.X, 0);
       this.Top.Set(pos.Y, 0);
     }
-    /// Places, and then appends each button as a child.
+    /// <summary>
+    /// Places all buttons from this layout into this element.
+    ///
+    /// Does not clear existing buttons.
+    /// </summary>
     private void PlaceGrid() {
       if (this.layout == null) { return; }
 
