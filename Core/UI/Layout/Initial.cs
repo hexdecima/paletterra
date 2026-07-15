@@ -31,8 +31,16 @@ namespace Paletterra.Core.UI {
       // NOTE: This feels painfully inefficient.
       btn.PreDraw = delegate(ImageButton btn) {
         PaletteSystem sys = ModContent.GetInstance<PaletteSystem>();
-        Texture2D icon = 
-          (Texture2D)ModContent.Request<Texture2D>($"Terraria/Images/Item_{sys.paintTracker?.active ?? ItemID.AngelStatue}");
+
+        Texture2D noPaintText = (Texture2D)ModContent.Request<Texture2D>("Paletterra/Assets/Textures/EmptyPaint");
+        Texture2D icon;
+
+        if (sys.paintTracker != null && sys.paintTracker.active != null) {
+          icon = (Texture2D)ModContent.Request<Texture2D>($"Terraria/Images/Item_{sys.paintTracker.active}");
+        } else {
+          icon = noPaintText;
+        }
+
         btn.image = icon; 
       };
       btn.OnLeftClick += delegate(UIMouseEvent ev, UIElement el) {

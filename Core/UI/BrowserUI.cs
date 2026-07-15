@@ -33,7 +33,12 @@ namespace Paletterra.Core.UI {
       this.entries = updated;
 
       if (this.panel != null) {
-        ImageButton[] btns = this.MapEntriesToButtons();
+        ImageButton[] paintBtns = this.MapEntriesToButtons();
+        ImageButton[] btns = [
+          this.MkDeselectButton(),
+          .. paintBtns
+        ];
+
         this.panel.UpdateEntries(btns);
       }
     }
@@ -47,6 +52,24 @@ namespace Paletterra.Core.UI {
       this.Height.Set(size.Y.Scaled, 0);
       this.Left.Set(this.pos.X, 0);
       this.Top.Set(this.pos.Y, 0);
+    }
+
+    /// <summary>
+    /// Makes a button to deselect active paint.
+    /// </summary>
+    private ImageButton MkDeselectButton() {
+      Texture2D icon = (Texture2D)ModContent.Request<Texture2D>(
+          "Paletterra/Assets/Textures/EmptyPaint"
+        );
+      ImageButton btn = new ImageButton(icon);
+      btn.tooltip = "Deselect";
+      btn.OnLeftClick += delegate(UIMouseEvent ev, UIElement el) {
+          PaletteSystem sys = ModContent.GetInstance<PaletteSystem>();
+          #nullable disable
+          sys.paintTracker.active = null;
+      };
+
+      return btn;
     }
 
     /// <summary>
