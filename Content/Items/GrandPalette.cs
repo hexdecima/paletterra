@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Paletterra.Content.Items
 {
-  enum ExceptionPaint {
+  enum Coat {
     Illuminant,
     Echo,
   }
@@ -85,13 +85,13 @@ namespace Paletterra.Content.Items
           if (paintId == null) return;
 
           // Illuminant and Echo coatings are applied very differently from the rest.
-          ExceptionPaint? except = null;
-          if (paintId == ItemID.GlowPaint) except = ExceptionPaint.Illuminant;
-          else if (paintId == ItemID.EchoCoating) except = ExceptionPaint.Echo;
+          Coat? coat = null;
+          if (paintId == ItemID.GlowPaint) coat = Coat.Illuminant;
+          else if (paintId == ItemID.EchoCoating) coat = Coat.Echo;
 
-          bool usedPaint = except == null ?
-            this.HandleRegularPaint(t, paintId.Value, tool) :
-            this.HandleExceptionPaint(t, except.Value, tool);
+          bool usedPaint = coat == null ?
+            this.HandlePaint(t, paintId.Value, tool) :
+            this.HandleCoat(t, coat.Value, tool);
 
           if (usedPaint) {
             sys.ApplyItemDelay();
@@ -109,7 +109,7 @@ namespace Paletterra.Content.Items
     }
     // Almost all paints just require setting the paint byte of the tile
     // to its respective one.
-    private bool HandleRegularPaint(Tile t, short paintId, Tool tool) {
+    private bool HandlePaint(Tile t, short paintId, Tool tool) {
       byte? paint = Paints.MapItemToPaint(paintId);
       if (paint == null) return false;
 
@@ -125,25 +125,25 @@ namespace Paletterra.Content.Items
     }
     // The two exceptions work by changing specific properties of the tile,
     // as a tile can both have a paint colour AND be invisible.
-    private bool HandleExceptionPaint(Tile t, ExceptionPaint paint, Tool tool) {
+    private bool HandleCoat(Tile t, Coat paint, Tool tool) {
       if (tool == Tool.Brush) {
         switch (paint) {
-          case ExceptionPaint.Echo:
+          case Coat.Echo:
             if (t.IsTileInvisible) return false;
             else t.IsTileInvisible = true;
             break;
-          case ExceptionPaint.Illuminant:
+          case Coat.Illuminant:
             if (t.IsTileFullbright) return false;
             else t.IsTileFullbright = true;
             break;
         }
       } else {
         switch (paint) {
-          case ExceptionPaint.Echo:
+          case Coat.Echo:
             if (t.IsWallInvisible) return false;
             else t.IsWallInvisible = true;
             break;
-          case ExceptionPaint.Illuminant:
+          case Coat.Illuminant:
             if (t.IsWallFullbright) return false;
             else t.IsWallFullbright = true;
             break;
