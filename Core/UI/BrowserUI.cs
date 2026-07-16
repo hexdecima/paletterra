@@ -76,9 +76,10 @@ namespace Paletterra.Core.UI {
     /// Returns the paint entries mapped to buttons.
     /// </summary>
     private ImageButton[] MapEntriesToButtons() {
-      ImageButton[] btns = new ImageButton[this.entries.Length];
+      int cap = int.Clamp(this.entries.Length, 0, 23);
+      ImageButton[] btns = new ImageButton[cap];
 
-      for (int i = 0; i < this.entries.Length; i++) {
+      for (int i = 0; i < cap; i++) {
         PaintEntry entry = this.entries[i];
         Texture2D text = (Texture2D)ModContent.Request<Texture2D>(
             $"Terraria/Images/Item_{entry.id}");
