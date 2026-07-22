@@ -7,3 +7,5 @@ Similarly to the Grand Design, players can right-click to open a menu where they
 the painting tools, or select one of the paints in their inventory to use.
 
 One of the first 23 paints in inventory can be selected at anytime, and the Palette reaches about 16-blocks far.
+
+[i]For a changelog, check[/i] [url=https://github.com/hexdecima/paletterra/blob/main/CHANGELOG.md]here[/url]
