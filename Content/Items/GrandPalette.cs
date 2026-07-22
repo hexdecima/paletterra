@@ -25,7 +25,7 @@ namespace Paletterra.Content.Items
       Item.consumable = false;
       Item.width = 32;
       Item.height = 32;
-      Item.rare = ItemRarityID.Blue;
+      Item.rare = ItemRarityID.Orange;
       Item.useAnimation = 15;
       Item.useTime = 15;
       Item.autoReuse = true;
@@ -33,14 +33,22 @@ namespace Paletterra.Content.Items
     }
     public override void AddRecipes()
     {
-      this.CreateRecipe()
-        .AddIngredient(ItemID.Paintbrush)
-        .AddIngredient(ItemID.PaintRoller)
-        .AddIngredient(ItemID.PaintScraper)
-        .AddIngredient(ItemID.RichMahogany, 16)
-        .AddIngredient(ItemID.Bone, 6)
-        .AddTile(TileID.TinkerersWorkbench)
-        .Register();
+      short[] tier1 = [ItemID.IronBar, ItemID.LeadBar];
+      short[] tier3 = [ItemID.PlatinumBar, ItemID.GoldBar];
+
+      foreach (short t1bar in tier1) {
+        foreach (short t3bar in tier3) {
+          this.CreateRecipe()
+            .AddIngredient(ItemID.Paintbrush)
+            .AddIngredient(ItemID.PaintRoller)
+            .AddIngredient(ItemID.PaintScraper)
+            .AddIngredient(ItemID.Wire, 36)
+            .AddIngredient(t1bar, 12)
+            .AddIngredient(t3bar, 4)
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
+          }
+      }
     }
     public override bool AltFunctionUse(Player player) => true;
     public override bool? UseItem(Player player)

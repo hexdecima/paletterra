@@ -52,11 +52,13 @@ namespace Paletterra.Core.UI {
       this.panel.Height.Set(PANEL_DIMENSIONS.Y.Scaled, 0);
       this.SetPadding(0);
       this.panel.SetPadding(0);
+      this.panel.BackgroundColor = Color.DarkRed;
+      this.panel.BorderColor = Color.Red;
 
       this.ResetButtons();
     }
     private void ResetButtons() {
-      ScalingVec2 currentPoint = new ScalingVec2(PADDING.Scaled, PADDING.Scaled);
+      ScalingVec2 currentPoint = new ScalingVec2(PADDING.initial, PADDING.initial);
 
       this.panel.RemoveAllChildren();
       foreach (ImageButton btn in this.entries) {

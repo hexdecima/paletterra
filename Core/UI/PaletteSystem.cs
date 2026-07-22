@@ -213,8 +213,9 @@ namespace Paletterra.Core.UI {
     }
     private void UpdatePaletteHold() {
       if (this.isHoldingPalette) {
-        if (this.paintTracker?.active == null) return;
-        if (this.overlay != null && !this.overlay.isEnabled)
+        if (this.paintTracker != null 
+            && this.overlay != null 
+            && !this.overlay.isEnabled)
           this.overlay.Enable();
       } else {
         if (this.menu != null && this.menu.isEnabled) {
@@ -233,7 +234,7 @@ namespace Paletterra.Core.UI {
       this.paintTracker = new PaintTracker();
       this.menu = new PaletteElement<MenuUI>();
       this.browser = new PaletteElement<BrowserUI>();
-      this.overlay= new PaletteElement<OverlayUI>();
+      this.overlay = new PaletteElement<OverlayUI>();
       this.itemDelay = 0;
       this.PreloadTextures();
     }

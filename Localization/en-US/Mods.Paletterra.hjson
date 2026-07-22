@@ -1,11 +1,11 @@
 Items: {
 	GrandPalette: {
-		DisplayName: Mahogany Palette
+		DisplayName: Mechanical Palette
 		Tooltip:
 			'''
-			Used as a brush, roller or scraper
-			Can also apply coatings
+			"For the painter of tomorrow."
 			Right-click to configure
+			Can also apply coatings
 			'''
 	}
 }

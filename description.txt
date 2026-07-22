@@ -1,0 +1,9 @@
+A teeny-tiny quality of life mod that adds a painting equivalent to wiring's Grand Design, the Mechanical Palette.
+
+[h2] Usage [/h2]
+The palette can be crafted with all three painting tools and some post-Skeletron materials.
+
+Similarly to the Grand Design, players can right-click to open a menu where they can cycle through each of
+the painting tools, or select one of the paints in their inventory to use.
+
+One of the first 23 paints in inventory can be selected at anytime, and the Palette reaches about 16-blocks far.

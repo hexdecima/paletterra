@@ -16,9 +16,9 @@ namespace Paletterra.Core.UI {
     public static readonly Texture2D Frame = 
       (Texture2D)ModContent.Request<Texture2D>("Terraria/Images/Inventory_Back8");
     /// A colour to use for the frame, while this button is not hovered.
-    public static Color FrameColor = new Color(80, 80, 210);
+    public static Color FrameColor = Color.DarkRed;
     /// Same as above but for hovered state.
-    public static Color HoverColor = new Color(50, 50, 175);
+    public static Color HoverColor = Color.Red;
     /// A texture to use if `image` is not defined.
     private static Texture2D Placeholder { get => 
       (Texture2D)ModContent.Request<Texture2D>($"Terraria/Images/Item_{ItemID.AngelStatue}"); }
