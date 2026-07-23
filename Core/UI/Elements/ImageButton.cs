@@ -13,12 +13,10 @@ namespace Paletterra.Core.UI {
   /// texture as image.
   public class ImageButton : UIElement {
     /// A texture to render as the frame, behind the image.
-    public static readonly Texture2D Frame = 
-      (Texture2D)ModContent.Request<Texture2D>("Terraria/Images/Inventory_Back8");
-    /// A colour to use for the frame, while this button is not hovered.
-    public static Color FrameColor = Color.DarkRed;
-    /// Same as above but for hovered state.
-    public static Color HoverColor = Color.Red;
+    private static Texture2D RegularFrame { get =>
+      (Texture2D)ModContent.Request<Texture2D>("Paletterra/Assets/Textures/MenuFrame_Regular"); }
+    private static Texture2D HoverFrame { get =>
+      (Texture2D)ModContent.Request<Texture2D>("Paletterra/Assets/Textures/MenuFrame_Highlight"); }
     /// A texture to use if `image` is not defined.
     private static Texture2D Placeholder { get => 
       (Texture2D)ModContent.Request<Texture2D>($"Terraria/Images/Item_{ItemID.AngelStatue}"); }
@@ -29,8 +27,6 @@ namespace Paletterra.Core.UI {
     public bool visible = true;
 
     public string? tooltip = null;
-    /// Colour tint for this button's frame.
-    public Color color = ImageButton.FrameColor;
     /// Inner padding.
     public Directions padding = new Directions(6, 6, 6, 6);
     /// <summary>
@@ -64,11 +60,13 @@ namespace Paletterra.Core.UI {
           (int)dims.Height - (int)this.padding.Y.Scaled
           );
 
-      if (IsMouseHovering && this.tooltip != null) {
-        Main.hoverItemName = this.tooltip;
+      Texture2D frame = ImageButton.RegularFrame;
+      if (IsMouseHovering) {
+        if (this.tooltip != null) Main.hoverItemName = this.tooltip;
+        frame = ImageButton.HoverFrame;
       }
 
-      sb.Draw(ImageButton.Frame, frameRect, this.color);
+      sb.Draw(frame, frameRect, Color.White);
       sb.Draw(this.image ?? ImageButton.Placeholder
           , imgRect, Color.White);
     }
@@ -79,10 +77,6 @@ namespace Paletterra.Core.UI {
 
       if (IsMouseHovering) {
         Main.LocalPlayer.mouseInterface = true;
-
-        this.color = ImageButton.HoverColor;
-      } else {
-        this.color = ImageButton.FrameColor;
       }
     }
     #endregion
